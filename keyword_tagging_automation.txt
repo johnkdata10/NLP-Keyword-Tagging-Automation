@@ -5,12 +5,12 @@ import pandas as pd
 import numpy as np
 import re
 
-df = pd.read_csv("C:/Users/KRAMAJM/OneDrive - (O365)/Documents/NLP NER/data_filtered.csv", encoding = "ISO-8859-1") 
+df = pd.read_csv("C:/Users/KRAMAJM/dataset.csv", encoding = "ISO-8859-1") 
 df = df.astype(str)
-df["er_txt_anl_fact.event_summary"] = df["er_txt_anl_fact.event_summary"].str.lower()
+df["event_summary"] = df["event_summary"].str.lower()
 
 #####dictionary
-virtus_dict = pd.read_excel("C:/Users/USERNAME/Documents/NLP NER/Dictionary_Long.xlsx")
+virtus_dict = pd.read_excel("C:/Users/USERNAME/Dictionary_Long.xlsx")
 virtus_dict = virtus_dict.fillna('').astype(str).apply(lambda x: x.str.lower())
 virtus_dict['Tag'] = virtus_dict.Tag.str.replace(' ','_')
 
@@ -28,17 +28,17 @@ d_lower = {key.lower():value.lower() for key, value in dict_list.items()}
 
 
 ######adding tags in new column separated by comma
-df['matchlabels'] = df['er_txt_anl_fact.event_summary'].apply(lambda x: ', '.join(
+df['matchlabels'] = df['event_summary'].apply(lambda x: ', '.join(
       set([d_lower[y] for y in d_lower.keys() if y in x])
     ))
 
 
 ######addings 1s and 0s in new columns
 pattern = '|'.join(dict_list.keys())
-matches = df['er_txt_anl_fact.event_summary'].str.extractall(f"({pattern})", flags=re.IGNORECASE)[0]
+matches = df['event_summary'].str.extractall(f"({pattern})", flags=re.IGNORECASE)[0]
 tags = matches.str.lower().map({kw.lower():tag for kw, tag in dict_list.items()})
 tags = tags.rename_axis(['line', 'match']).reset_index(name='tag').assign(value=1)
-df = tags.pivot_table(index='line', columns='tag', values='value', fill_value=0).join(df[['er_txt_anl_fact.id','matchlabels','er_txt_anl_fact.event_summary']])
+df = tags.pivot_table(index='line', columns='tag', values='value', fill_value=0).join(df[['id','matchlabels','event_summary']])
 
 #####reordering columns
 cols = df.columns.tolist()
@@ -55,9 +55,9 @@ df
 
 #function for same code above
 
-data_filtered = "C:/Users/KRAMAJM/OneDrive - AbbVie Inc (O365)/Documents/NLP NER/data_filtered.csv"
-dictionary = "C:/Users/KRAMAJM/OneDrive - AbbVie Inc (O365)/Documents/NLP NER/Virtus_Dictionary_Long.xlsx"
-column_name = "er_txt_anl_fact.event_summary"
+data_filtered = "C:/Users/KRAMAJM/dataset.csv"
+dictionary = "C:/Users/KRAMAJM/Dictionary_Long.xlsx"
+column_name = "event_summary"
 
 def tagging_function(df1, df2, columnName):
     df = pd.read_csv(df1, encoding = "ISO-8859-1") 
