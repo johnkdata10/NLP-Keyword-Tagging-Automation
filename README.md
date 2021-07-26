@@ -15,4 +15,4 @@ I created an algorithm in Python that fully automated this process in 1-2 minute
 in each report while also linking the keywords/tags with the corresponding claim id and lengthy 500+ issue/problem/exception report.
 
 ## Key Highlight
-My algorithm is extendable to other similar use cases.
+This algorithm is extendable to other similar use cases.
