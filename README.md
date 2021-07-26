@@ -1,7 +1,7 @@
 # NLP-Keyword-Tagging-Automation
 
 ## Background/Description
-#### This was a proprietary project so images of input and output data are unavailable at this time. Code has been generalized to showcase work.
+#### This was a proprietary project so input and output data are unavailable at this time. Code has been generalized to showcase work.
 Company team was looking to analyze issues/problems/exceptions manually documented from anyone who was having issues with equipment/plant/etc.
 Each report was 500+ words and was compiled into one excel file for complete analysis. The compiled excel file ultimately contained 3000+ rows of reports with each row containing
 the individual report of 500+ words (each row contained each issue/problem/exception report along with associated claim id).
